@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'generator_ts.apps.GeneratorTsConfig',
+
 ]
 
 MIDDLEWARE = [
