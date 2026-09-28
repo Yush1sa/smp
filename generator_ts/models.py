@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
-class Projects(models.Model):
+class Project(models.Model):
     title = models.TextField("Название проекта")
     dbeg = models.DateField("Дата начала проекта")
     dend = models.DateField("Дата конца проекта")
@@ -19,8 +19,8 @@ class Projects(models.Model):
     def __str__(self):
         return self.title
 
-class Project_stages(models.Model):
-    project = models.ForeignKey(Projects, on_delete=models.CASCADE, null=True)
+class ProjectStage(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     stage_number = models.SmallIntegerField("Номер этапа")
     title = models.TextField("Название этапа")
     executor_deadline = models.DateField("Срок выполнения этапа")
@@ -39,8 +39,8 @@ class Project_stages(models.Model):
     def __str__(self):
         return self.title
 
-class Stage_tasks(models.Model):
-    stage = models.ForeignKey(Project_stages, on_delete=models.CASCADE, null=True)
+class StageTask(models.Model):
+    stage = models.ForeignKey(ProjectStage, on_delete=models.CASCADE, null=True)
     task_number = models.SmallIntegerField("Номер задачи")
     executor = models.ForeignKey("auth.User", on_delete=models.CASCADE, null=True)
     cost = models.DecimalField(max_digits=15, decimal_places=2)
