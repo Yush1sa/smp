@@ -1,5 +1,41 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+class Role(models.Model):
+    class Choices(models.IntegerChoices):
+        UNDEFINED = 0, "Не определено"
+        CUSTOMER = 1, "Заказчик"
+        MANAGER = 2, "Менеджер"
+        EXECUTOR = 3, "Исполнитель"
+
+    id = models.IntegerField(primary_key=True, choices=Choices)
+    name = models.CharField(max_length=50, editable=False)
+
+    def __str__(self):
+        return self.name
+
+
+class Profile(models.Model):
+    user = models.OneToOneField("auth.User", on_delete=models.CASCADE, null=True, blank=True)
+    roles = models.ManyToManyField(Role, blank=True, verbose_name="Роли")
+
+    def __str__(self):
+        return self.user.username if self.user else f"Profile {self.id}"
+
+
+@receiver(post_save, sender=User)
+def on_user_create(sender, instance, created, *args, **kwargs):
+    if created:
+        profile = Profile.objects.create(user=instance)
+
+        undefined_role, _ = Role.objects.get_or_create(
+            id=Role.Choices.UNDEFINED
+        )
+
+        profile.roles.add(undefined_role)
 
 # Create your models here.
 class Project(models.Model):
@@ -8,7 +44,6 @@ class Project(models.Model):
     dend = models.DateField("Дата конца проекта")
     manager = models.ForeignKey("auth.User", on_delete=models.CASCADE, null=True, related_name="manager_marks")
     customer = models.ForeignKey("auth.User", on_delete=models.CASCADE, null=True, related_name="customer_marks")
-
     structure_code = models.IntegerField("Код структуры")
     kosgu = models.IntegerField("КОСГУ")
     kps = models.IntegerField("КПС")

@@ -9,6 +9,7 @@ class ProjectsViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
+    mixins.RetrieveModelMixin,
     mixins.DestroyModelMixin,
     GenericViewSet
 ):
@@ -19,6 +20,7 @@ class ProjectStageViewSet(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
     mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
     GenericViewSet
 ):

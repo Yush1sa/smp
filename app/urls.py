@@ -19,13 +19,12 @@ from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
-
-from generator_ts.api import ProjectsViewSet, ProjectStageViewSet
+from generator_ts.api import ProjectsViewSet, ProjectStageViewSet, StageTaskViewSet
 
 router = DefaultRouter()
 router.register('projects', ProjectsViewSet, basename='projects')
 router.register('stages', ProjectStageViewSet, basename='stages')
-router.register('tasks', ProjectStageViewSet, basename='tasks')
+router.register('tasks', StageTaskViewSet, basename='tasks')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),

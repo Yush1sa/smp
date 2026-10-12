@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from generator_ts.models import Project, ProjectStage, StageTask
+from generator_ts.models import Project, ProjectStage, StageTask, Profile
 
 
 # Register your models here.
@@ -16,3 +16,8 @@ class Projects_stages_admin(admin.ModelAdmin):
 @admin.register(StageTask)
 class Stage_tasks_admin(admin.ModelAdmin):
     list_display = ["id", 'stage', 'task_number', 'executor', 'cost', 'description']
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        return False
