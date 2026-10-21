@@ -21,6 +21,8 @@ from django.urls import path, include
 
 
 from rest_framework.routers import DefaultRouter
+
+from api import ProfileViewSet
 from app import settings
 from generator_ts.api import ProjectsViewSet, ProjectStageViewSet, StageTaskViewSet
 
@@ -28,6 +30,8 @@ router = DefaultRouter()
 router.register('projects', ProjectsViewSet, basename='projects')
 router.register('stages', ProjectStageViewSet, basename='stages')
 router.register('tasks', StageTaskViewSet, basename='tasks')
+router.register('profile', ProfileViewSet, basename='profile')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),

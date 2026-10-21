@@ -1,4 +1,7 @@
 <script setup>
+    import axios from "axios";
+    import {onBeforeMount, ref} from "vue";
+
     const projects = ref([]);
 
     async function fetchProjects() {
@@ -18,6 +21,12 @@
 </script>
 
 <template>
+    <div v-for="item in projects">
+      {{ item.title }}
+    </div>
+    <button @click="onLoadClick()">Загрузить</button>
+  
+
 
 </template>
 
